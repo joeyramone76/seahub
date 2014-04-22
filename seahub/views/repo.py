@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 import logging
+import urllib
+import base64
+import simplejson as json
 
 from django.core.urlresolvers import reverse
 from django.contrib.sites.models import RequestSite
@@ -232,6 +235,12 @@ def render_repo(request, repo):
     fileshare = get_fileshare(repo.id, username, path)
     dir_shared_link = get_dir_share_link(fileshare)
     uploadlink = get_uploadlink(repo.id, username, path)
+
+    open_local_info = base64.encodestring(json.dumps({
+        'repo_id': repo.id,
+        'repo_name': repo.name,
+        'path': path[1:]
+    }).encode('UTF-8'))
     dir_shared_upload_link = get_dir_shared_upload_link(uploadlink)
 
     return render_to_response('repo.html', {
@@ -268,6 +277,7 @@ def render_repo(request, repo):
             'ENABLE_SUB_LIBRARY': ENABLE_SUB_LIBRARY,
             'server_crypto': server_crypto,
             "sub_lib_enabled": sub_lib_enabled,
+            'open_local_info': open_local_info,
             }, context_instance=RequestContext(request))
    
 @login_required    

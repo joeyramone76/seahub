@@ -10,6 +10,7 @@
     {% endfor %}
     </p>
     <div class="repo-op fright">
+      <a href="seafile://{{ open_local_info }}">{% trans "Open local folder"%}</a>
         {% if user_perm == 'rw' %}
         <button id="upload-file" class="op-btn"><span class="icon-upload-alt"></span>{% trans "Upload"%}</button>
         <button id="add-new-dir" class="op-btn"><span class="icon-plus-sign-alt"></span>{% trans "New Directory"%}</button>

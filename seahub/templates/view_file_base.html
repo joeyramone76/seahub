@@ -30,6 +30,9 @@
         </p>
 
         <div class="file-op fright">
+            {% if request.user.is_authenticated %}
+            <a href="seafile://{{ open_local_info }}">{% trans "Open local file"%}</a>
+            {% endif %}
             {% if not repo.encrypted %}
             <button data-link="{{ file_shared_link }}" data-token="{{ fileshare.token }}" id="share"><span class="sf-icon-share"></span>{% trans "Share"%}</button>
             {% endif %}

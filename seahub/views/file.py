@@ -12,6 +12,8 @@ import urllib2
 import chardet
 import logging
 import posixpath
+import urllib
+import base64
 
 from django.core.cache import cache
 from django.contrib.sites.models import RequestSite
@@ -429,6 +431,12 @@ def view_file(request, repo_id):
     is_starred = is_file_starred(username, repo.id, path.encode('utf-8'), org_id)
 
     template = 'view_file_%s.html' % ret_dict['filetype'].lower()
+
+    open_local_info = base64.encodestring(json.dumps({
+        'repo_id': repo.id,
+        'repo_name': repo.name,
+        'path': path[1:]
+    }).encode('UTF-8'))
         
     search_repo_id = None
     if not repo.encrypted:
@@ -469,6 +477,7 @@ def view_file(request, repo_id):
             'img_prev': img_prev,
             'img_next': img_next,
             'search_repo_id': search_repo_id,
+            'open_local_info': open_local_info,
             }, context_instance=RequestContext(request))
 
 def view_history_file_common(request, repo_id, ret_dict):

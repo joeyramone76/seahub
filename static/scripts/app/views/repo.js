@@ -31,13 +31,13 @@ define([
         // disable 'hover' when 'repo-del-confirm' popup is shown
         highlight: function() {
             if ($('#my-own-repos .repo-del-confirm').length == 0) {
-                this.$el.addClass('hl').find('.op-icon').removeClass('vh');
+                this.$el.addClass('active').find('.op-icon').removeClass('vh');
             }
         },
 
         rmHighlight: function() {
             if ($('#my-own-repos .repo-del-confirm').length == 0) {
-                this.$el.removeClass('hl').find('.op-icon').addClass('vh');
+                this.$el.removeClass('active').find('.op-icon').addClass('vh');
             }
         },
 

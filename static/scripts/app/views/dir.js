@@ -2,7 +2,6 @@ define([
     'jquery',
     'jquery.ui.progressbar',
     'jquery.magnific-popup',
-    'simplemodal',
     'underscore',
     'backbone',
     'common',
@@ -11,7 +10,7 @@ define([
     'app/views/dirent',
     'app/views/fileupload',
     'app/views/share'
-    ], function($, progressbar, magnificPopup, simplemodal, _, Backbone, Common,
+    ], function($, progressbar, magnificPopup, _, Backbone, Common,
         FileTree, DirentCollection, DirentView, FileUploadView, ShareView) {
         'use strict';
 
@@ -283,8 +282,8 @@ define([
                     dir = this.dir,
                     dirView = this;
 
-                form.modal({appendTo:'#main'});
-                $('#simplemodal-container').css({'height':'auto'});
+                form.modal('show');
+                // $('#simplemodal-container').css({'height':'auto'});
 
                 form.submit(function() {
                     var dirent_name = $.trim($('input[name="name"]', form).val());
@@ -298,7 +297,7 @@ define([
                         post_url = Common.getUrl({name: "new_dir", repo_id: dir.repo_id})
                                    + '?parent_dir=' + encodeURIComponent(dir.path);
                     var after_op_success = function(data) {
-                        $.modal.close();
+                        form.modal('hide');
 
                         var new_dirent = dir.add({
                             'is_dir': true,

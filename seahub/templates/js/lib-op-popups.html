@@ -1,13 +1,18 @@
 {% load i18n upload_tags %}
 
     <script type="text/template" id="add-new-dir-form-template">
-    <form id="add-new-dir-form" action="" method="post" class="hide">{% csrf_token %}
-        <h3>{% trans "New Directory" %}</h3>
-        <label>{% trans "Directory Name" %}</label><br />
-        <input type="text" name="name" value="" class="input" maxlength="{{max_file_name}}"/><br />
-        <p class="error hide"></p>
-        <button type="submit" class="submit">{% trans "Submit" %}</button>
-        <button class="simplemodal-close">{% trans "Cancel" %}</button>
+    <form id="add-new-dir-form" action="" method="post" class="ui modal">{% csrf_token %}
+        <i class="close icon"></i>
+        <div class="header">{% trans "New Directory" %}</div>
+        <div class="content">
+            <label>{% trans "Directory Name" %}</label><br />
+            <input type="text" name="name" value="" class="input" maxlength="{{max_file_name}}"/><br />
+            <p class="error hide"></p>
+        </div>
+        <div class="actions">
+            <button type="submit" class="submit">{% trans "Submit" %}</button>
+            <button class="simplemodal-close">{% trans "Cancel" %}</button>
+        </div>
     </form>
     </script>
 
@@ -84,7 +89,7 @@
     </div>
     </script>
 
-    {% upload_js %}    
+    {% upload_js %}
 
     <!--script type="text/template" id="upload-file-dialog-template"-->
     <div id="upload-file-dialog" class="hide">

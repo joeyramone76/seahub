@@ -12,8 +12,11 @@
 <link rel="shortcut icon" href="{{ MEDIA_URL }}img/favicon.png?t=1398068110"/>
 <![endif]-->
 
+<link rel="stylesheet" type="text/css" href="{% static "semantic-ui/dist/semantic.css" %}" />
+
+
 {% compress css %}
-<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/seahub.css?t=1398068110" />
+<!-- <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/seahub.css?t=1398068110" /> -->
 <link rel="stylesheet" type="text/css" href="{% static "css/select2-3.5.2.css" %}"/>
 <link rel="stylesheet" type="text/css" href="{% static "css/magnific-popup.css" %}" />
 <link rel="stylesheet" type="text/css" href="{% static "css/backbone.css" %}"/>
@@ -37,7 +40,9 @@
         <div id="header">
             <div id="header-inner">
                 {% block notice_panel %}{% endblock %}
-                <a href="{{ SITE_ROOT }}" id="logo" class="fleft">
+                <div class="ui menu top">
+
+                <a href="{{ SITE_ROOT }}" id="logo" class="item">
                     {% if seacloud_mode %}
                     <img src="{{ MEDIA_URL }}img/seacloud_logo.png?t=1398068110" title="Seacloud" alt="logo" width="186" height="31" />
                     {% else %}
@@ -45,41 +50,45 @@
                     {% endif %}
                 </a>
                 {% block nav %}
-                <ul class="nav">
-                    <li class="nav-item">
-                    <a href="{{ SITE_ROOT }}#my-libs/" class="a">{% trans "My Home" %}</a>
-                    </li>
 
-                    {% if grps %}
-                    <li class="nav-item nav-item-group" style="position:relative;">
-                    <a href="{% url 'group_list' %}" class="a" id="top-nav-grp">{% trans "Groups" %} <span class="icon-caret-down"></span></a>
-                    </li>
-                    {% else %}
-                    <li class="nav-item">
-                    <a href="{% url 'group_list' %}" class="a">{% trans "Groups" %}</a>
-                    </li>
-                    {% endif %}
+                  <a class="item" href="{{ SITE_ROOT }}#my-libs/">{% trans "My Home" %}</a>
 
-                    {% if user.permissions.can_view_org %}
-                    <li class="nav-item">
-                    <a href="{{ SITE_ROOT }}#org/" class="a">{% trans "Organization" %}</a>
-                    </li>
-                    {% endif %}
+                  {% if grps %}
+                  <div class="ui dropdown item">
+                    {% trans "Groups" %}
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        {% for group in grps %}
+                        <div class="item">
+                            {% grp_avatar group.id 32 %}
+                            <a class="item" href="#group/{{group.id}}/">{{group.group_name}}</a>
+                        </div>
+                        {% endfor %}
 
-                    <li class="nav-item">
-                    <a href="{{ SITE_ROOT }}help/" class="a">{% trans "Help" %}</a>
-                    </li>
-                </ul>
+                    </div>
+                  </div>
+                  {% else %}
+
+                  <a href="{% url 'group_list' %}" class="item">{% trans "Groups" %}</a>
+
+                  {% endif %}
+
+                  {% if user.permissions.can_view_org %}
+                  <a href="{{ SITE_ROOT }}#org/" class="a item {% block cur_pubinfo %}{% endblock %}">{% trans "Organization" %}</a>
+                  {% endif %}
+
+                  <a href="{{ SITE_ROOT }}help/" class="a item {% block cur_help %}{% endblock %}">{% trans "Help" %}</a>
+
                 {% endblock %}
 
                 {% block header_right %}
                 {% if request.user.is_authenticated %}
-                <div class="fright">
+                <div class="menu right">
                 {% if has_file_search %}
                     {% include 'snippets/search_form.html' %}
                 {% endif %}
 
-                <div id="msg-count" class="fleft">
+                <div id="msg-count" class="item">
                     <div id="notice-icon" class="cspt" title="{% trans "Notifications" %}">
                         <img src="{{ MEDIA_URL }}img/bell.png" alt="" />
                         <span class="num hide">0</span>
@@ -96,7 +105,7 @@
                     </div>
                 </div>
 
-                <div id="account" class="fright">
+                <div id="account" class="item">
                     <div id="my-info">
                         {% avatar request.user 36 %} <span class="icon-caret-down vam"></span>
                     </div>
@@ -115,12 +124,12 @@
                         <a href="{{ SITE_ROOT }}accounts/logout/" class="item" id="logout">{% trans "Log out" %}</a>
                     </div>
                     {% if request.user.is_staff %}
-                    <div class="manage">
+                    <div class="manage hide">
                         {% block sys_admin %}<a href="{% url 'sys_useradmin' %}" title="{% trans "System Admin" %}" class="a"><img src="{{ MEDIA_URL }}img/admin_in.png" alt="" /></a>{% endblock %}
                     </div>
                     {% endif %}
                     {% if request.user.org and request.user.org.is_staff %}
-                    <div class="manage">
+                    <div class="manage hide">
                         {% block org_admin %}<a href="{% url 'org_user_admin'%}" title="{% trans "Admin" %}" class="a"><img src="{{ MEDIA_URL }}img/admin_in.png" alt="" /></a>{% endblock %}
                     </div>
                     {% endif %}
@@ -128,6 +137,8 @@
                 </div>
                 {% endif %}
                 {% endblock %}
+
+                </div>
             </div>
         </div>
 
@@ -135,11 +146,13 @@
             <div id="title-panel" class="w100 ovhd">
                 {% block title_panel %}{% endblock %}
             </div>
-            <div id="left-panel">
+            <div class="ui grid">
+                <div id="left-panel" class="four wide column">
                 {% block left_panel %}{% endblock %}
-            </div>
-            <div id="right-panel">
+                </div>
+                <div id="right-panel" class="twelve wide column">
                 {% block right_panel %}{% endblock %}
+                </div>
             </div>
             <div id="main-panel" class="clear w100 ovhd">
                 {% if messages %}
@@ -161,7 +174,32 @@
             </div>
         </div>
 
-        {% include 'footer.html' %}
+        <div id="footer" class="ui footer segment">
+          <div class="ui stackable page grid">
+          <div class="ui ten wide column">
+            <div class="ui three column aligned stackable grid">
+              <div class="ui column">
+                <h4>{% trans "Documents" %}</h4>
+                <div class="ui link list">
+                    <a class="item" href="http://seafile.com/{% if LANGUAGE_CODE != 'zh-cn' %}en/{% endif %}home/" target="_blank">{% trans "Introduction" %}</a>
+        	        <a class="item" href="{{SITE_ROOT}}help/" target="_blank">{% trans "Help" %}</a>
+                </div>
+              </div>
+              <div class="ui column">
+                <h4>{% trans "Client" %}</h4>
+                <div class="ui link list">
+                <a class="item" href="{% url 'download_client' %}">{% trans "Seafile for Windows, Mac and Linux" %}</a></li>
+                </div>
+              </div>
+           </div>
+          </div>
+          <div class="ui six wide column">
+            <p>{% trans "Server Version: " %}{{ seafile_version }}</p>
+            <p>© 2015 {% trans "Seafile" %}</p>
+            <p><a href="http://seafile.com/{% if LANGUAGE_CODE != 'zh-cn' %}en/{% endif %}about/" target="_blank">{% trans "About Us" %}</a></p>
+          </div>
+          <div>
+        </div>
         {% include 'js/templates.html' %}
 </div><!-- wrapper -->
 

@@ -113,7 +113,7 @@
         <button id="cp-dirents" title="{% trans 'Copy' %}" class="op-btn"><span class="cp-dirents"></span></button>
         <button id="del-dirents" title="{% trans 'Delete' %}" class="op-btn"><span class="del-dirents"></span></button>
     </div>
-    <div id="upload-file" class="op-btn upload-file-btn">
+    <div id="upload-file" class="ui button upload-file-btn">
         <span>{% trans "Upload" %}</span>
         <input type="file" name="file" multiple />
     </div>
@@ -129,11 +129,11 @@
       </li>
     </ul>
     <% } %>
-    <button id="add-new-dir" class="op-btn">{% trans "New Folder" %}</button>
-    <button id="add-new-file" class="op-btn">{% trans "New File" %}</button>
+    <button id="add-new-dir" class="ui button">{% trans "New Folder" %}</button>
+    <button id="add-new-file" class="ui button">{% trans "New File" %}</button>
     <% } %>
     <% if (!encrypted) { %>
-    <button class="op-btn" id="share-cur-dir">{% trans "Share" %}</button>
+    <button class="ui button" id="share-cur-dir">{% trans "Share" %}</button>
     <% } %>
     <% if (path == '/') { %>
     <a class="repo-history-icon fright" href="<%= site_root %>repo/history/<%- repo_id %>/" target="_blank" title="{% trans 'History' %}"></a>
@@ -460,34 +460,32 @@
         <img id="myhome-enable-mods" class="fright" title="{% trans "Enable Modules" %}" src="{{MEDIA_URL}}img/setting.png" alt="" />
         <% } %>
     </div>
-    <ul class="side-tabnav-tabs">
-        <li class="tab tab-cur"><a href="{{ SITE_ROOT }}#my-libs/" class="lib">{% trans "Libraries" %}</a></li>
-        <li class="tab"><a href="{{ SITE_ROOT }}starred/" class="star">{% trans "Starred" %}</a></li>
+    <div class="ui fluid large vertical menu">
+        <a href="{{ SITE_ROOT }}#my-libs/" class="lib item"><i class="lib imageicon"></i>{% trans "Libraries" %}</a>
+        <a href="{{ SITE_ROOT }}starred/" class="star item"><i class="star imageicon"></i>{% trans "Starred" %}</a>
 
         <% if (events_enabled) { %>
-        <li class="tab"><a href="{{ SITE_ROOT }}activities/" class="activity">{% trans "Activities" %}</a></li>
+        <a href="{{ SITE_ROOT }}activities/" class="activity item">{% trans "Activities" %}</a>
         <% } %>
 
         <% for (var i = 0, len = mods_enabled.length; i < len; i++) { %>
             <% if (mods_enabled[i] == 'personal wiki') { %>
-        <li class="tab"><a href="{{ SITE_ROOT }}home/wiki/" class="wiki">{% trans "Personal Wiki" %}</a></li>
+        <a href="{{ SITE_ROOT }}home/wiki/" class="wiki item">{% trans "Personal Wiki" %}</a>
             <% } %>
         <% } %>
 
-        <li class="tab"><a href="{{ SITE_ROOT }}message/list/" class="msgs">{% trans "Messages" %}</a></li>
-        <li class="tab"><a href="{{ SITE_ROOT }}devices/" class="clients">{% trans "Devices" %}</a></li>
-        <li class="tab"><a href="{{ SITE_ROOT }}contacts/" class="contacts">{% trans "Contacts" %}</a></li>
-    </ul>
+        <a href="{{ SITE_ROOT }}message/list/" class="msgs item">{% trans "Messages" %}</a>
+        <a href="{{ SITE_ROOT }}devices/" class="clients item">{% trans "Devices" %}</a>
+        <a href="{{ SITE_ROOT }}contacts/" class="contacts item">{% trans "Contacts" %}</a>
+    </div>
 
     <h3 class="hd">{% trans "Share Admin" %}</h3>
-    <ul class="side-tabnav-tabs">
-        <% if (can_add_repo) { %>
-        <li class="tab"><a href="{{ SITE_ROOT }}share/" class="lib">{% trans "Libraries" %}</a></li>
-        <li class="tab"><a href="{{ SITE_ROOT }}share/folders/" class="folders">{% trans "Folders" %}</a></li>
-        <% } %>
-        <li class="tab"><a href="{{ SITE_ROOT }}share/files/" class="files">{% trans "Files" %}</a></li>
-        <li class="tab"><a href="{{ SITE_ROOT }}share/links/" class="links">{% trans "Links" %}</a></li>
-    </ul>
+    <div class="ui vertical menu">
+        <a href="{{ SITE_ROOT }}share/" class="lib item">{% trans "Libraries" %}</a>
+        <a href="{{ SITE_ROOT }}share/folders/" class="folders item">{% trans "Folders" %}</a>
+        <a href="{{ SITE_ROOT }}share/files/" class="files item">{% trans "Files" %}</a>
+        <a href="{{ SITE_ROOT }}share/links/" class="links item">{% trans "Links" %}</a>
+    </div>
 </script>
 <script type="text/template" id="myhome-mods-enable-form-tmpl">
 <form id="myhome-mods-enable-form" method="post" action="" class="hide">{% csrf_token%}

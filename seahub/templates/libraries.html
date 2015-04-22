@@ -42,25 +42,27 @@
 
 <div id="repo-tabs" class="tab-tabs hide">
     <div class="hd">
-        <ul class="tab-tabs-nav fleft">
+        <div class="ui secondary pointing menu">
             {% if user.permissions.can_add_repo %}
-            <li class="tab"><a href="#my-libs/" class="a" id="mylib-tab">{% trans "Mine" %}</a></li>
+            <a href="#my-libs/" class="item" id="mylib-tab">{% trans "Mine" %}</a>
             {% if sub_lib_enabled %}
-            <li class="tab"><a href="#my-sub-libs/" class="a" id="sublib-tab">{% trans "Sub-libraries" %}</a></li>
+            <a href="#my-sub-libs/" class="item" id="sublib-tab">{% trans "Sub-libraries" %}</a>
             {% endif %}
             {% endif %}
-            <li class="tab"><a href="#shared-libs/" class="a" id="shared-lib-tab">{% trans "Shared" %}</a></li>
-        </ul>
-        <div class="fright">
-            <button class="repo-create"><img src="{{ MEDIA_URL }}img/add.png" alt="" class="add vam" /><span class="vam">{% trans "New Library" %}</span></button>
-            {% if sub_lib_enabled %}
-            <button id="sub-lib-create" class="hide" title="{% trans "New Sub-library" %}"><img src="{{ MEDIA_URL }}img/add.png" alt="" class="add vam" /><span class="vam">{% trans "New Sub-library" %}</span></button>
-            {% endif %}
+
+            <a href="#shared-libs/" class="item" id="shared-lib-tab">{% trans "Shared" %}</a>
+
+            <div class="right menu">
+                <button id="repo-create" class="ui button">{% trans "New Library" %}</span></button>
+                {% if sub_lib_enabled %}
+                <button id="sub-lib-create" class="ui button hide" title="{% trans "New Sub-library" %}">{% trans "New Sub-library" %}</span></button>
+                {% endif %}
+            </div>
         </div>
     </div>
 
-    <div id="my-own-repos">
-        <table class="hide">
+    <div id="my-own-repos" class="ui basic fitted segment">
+        <table class="ui very basic table hide">
             <thead>
                 <tr>
                     <th width="4%"><!--icon--></th>
@@ -79,7 +81,7 @@
     </div>
 
     <div id="my-sub-repos">
-        <table class="hide">
+        <table class="ui table hide">
             <thead>
             <tr>
                 <th width="4%"><!--icon--></th>
@@ -98,7 +100,7 @@
     </div>
 
     <div id="repos-shared-to-me">
-        <table class="hide">
+        <table class="ui table very basic hide">
             <thead>
                 <tr>
                     <th width="4%"><!--icon--></th>
@@ -115,8 +117,6 @@
             <h2 class="alc">{% trans "No library is shared to you" %}</h2>
         </div>
     </div>
-
-    <img class="loading-tip" src="{{MEDIA_URL}}img/loading-icon.gif" alt="{% trans 'Loading...' %}" />
 </div>
 
 <div id="guide-for-new" class="hide">

@@ -20,10 +20,10 @@ define([
 
         initialize: function(options) {
             this.$tabs = $('#repo-tabs');
+            this.$segment = this.$('#my-own-repos');
             this.$table = this.$('#my-own-repos table');
             this.$tableHead = $('thead', this.$table);
             this.$tableBody = $('tbody', this.$table);
-            this.$loadingTip = $('.loading-tip', this.$tabs);
             this.$emptyTip = $('#my-own-repos .empty-tips');
             this.$repoCreateBtn = this.$('.repo-create');
 
@@ -56,15 +56,16 @@ define([
                     app.pageOptions.guide_enabled = false;
                 }
             }
-            this.$loadingTip.hide();
+            this.$segment.removeClass('loading');
         },
 
         showMyRepos: function() {
             this.repos.fetch({reset: true});
             this.$tabs.show();
             this.$table.hide();
-            this.$loadingTip.show();
-            $('#mylib-tab', this.$tabs).parent().addClass('ui-state-active');
+            // this.$loadingTip.show();
+            this.$segment.addClass('loading');
+            $('#mylib-tab').addClass('active');
         },
 
         show: function() {
@@ -77,7 +78,7 @@ define([
             this.$el.hide();
             this.$table.hide();
             this.$emptyTip.hide();
-            $('#mylib-tab', this.$tabs).parent().removeClass('ui-state-active');
+            $('#mylib-tab').removeClass('active');
         },
 
         createRepo: function() {

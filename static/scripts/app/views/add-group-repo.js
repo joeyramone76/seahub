@@ -1,11 +1,10 @@
 define([
     'jquery',
-    'simplemodal',
     'underscore',
     'backbone',
     'common',
     'app/views/add-repo'
-], function($, simplemodal, _, Backbone, Common, AddRepoView) {
+], function($, _, Backbone, Common, AddRepoView) {
     'use strict';
 
     var AddGroupRepoView = AddRepoView.extend({

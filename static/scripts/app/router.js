@@ -47,6 +47,10 @@ define([
             if (app.pageOptions.top_nav_groups.length > 0) {
                 this.topGroupNavView = new GroupNavView();
             }
+
+            $('.ui.dropdown').dropdown({
+                on: 'hover'
+            });
         },
 
         switchCurrentView: function(newView) {

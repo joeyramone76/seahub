@@ -58,13 +58,13 @@ define([
 
         highlight: function() {
             if (app.globalState.noFileOpPopup) {
-                this.$el.addClass('hl').find('.repo-file-op').removeClass('vh');
+                this.$el.addClass('active').find('.repo-file-op').removeClass('vh');
             }
         },
 
         rmHighlight: function() {
             if (app.globalState.noFileOpPopup) {
-                this.$el.removeClass('hl').find('.repo-file-op').addClass('vh');
+                this.$el.removeClass('active').find('.repo-file-op').addClass('vh');
             }
         },
 

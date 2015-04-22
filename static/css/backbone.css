@@ -1,3 +1,114 @@
+/* */
+.hide { display:none; }
+.vh { visibility:hidden; }
+.fleft { float:left }
+.fright { float:right }
+.ovhd { overflow:hidden; }
+.w100 { width: 100%; }
+input[type=submit],
+input[type=button],
+input.submit,
+.fileinput-button,
+select {
+    padding:5px 6px;
+    background:-webkit-linear-gradient(top, #fafafb, #eeeeee);
+    background:-moz-linear-gradient(top, #fafafb, #eeeeee);
+    background:linear-gradient(top, #fafafb, #eeeeee);
+    border: 1px solid #c5c5c5;
+    border-radius: 2px;
+}
+#main {
+    width:950px;
+}
+#main {
+    margin:0 auto;
+}
+#header {
+    padding-top:8px;
+    background:#f4f4f7 url('../img/nav.png') center top repeat-x;
+    width:100%;
+    font-size: 14px;
+    margin-bottom:40px;
+}
+#header-inner {
+    width:950px;
+    margin:0 auto;
+}
+#main {
+    min-height: 400px;
+    _height: 400px;
+}
+
+.tab-tabs {
+    margin-bottom:75px;
+}
+.ui.secondary.menu {
+    background: #f2f2f2;
+    padding: 9px 10px;
+    margin-bottom: 16px;
+}
+/* top header */
+#logo {
+    padding-left: 0;
+}
+.ui.top.menu {
+    background: none;
+    box-shadow: none;
+}
+.ui.top.menu .item:before {
+    width: 0;
+}
+/* footer */
+.ui.footer {
+    margin-top: 50px;
+}
+.ui.footer.segment {
+    padding: 3em 1em;
+}
+/* menus */
+i.imageicon {
+    background:transparent url('../img/menu-icons.png') no-repeat scroll 0 0;
+    height: 24px;
+    display: inline-block;
+    vertical-align: middle;
+}
+i.lib.imageicon {
+    background-position: 10px -234px;
+}
+i.star.imageicon {
+    background-position: 10px -104px;
+}
+i.
+.ui.menu .hide {
+    display: none;
+}
+.ui.secondary.pointing.menu {
+    border-bottom: none;
+}
+.ui.vertical.menu .item > i.imageicon {
+    float: none;
+    width: 3em;
+    opacity: 1;
+}
+.ui.vertical.menu {
+    background: none;
+    box-shadow: none;
+}
+.ui.vertical.menu .item:before {
+    width: 0;
+}
+.ui.secondary.pointing.menu > .item.active {
+    border-color: #ee8204;
+}
+/* table */
+th { text-align:left; font-weight:normal; color:#9c9c9c; }
+td, th { padding:5px 3px; word-wrap:break-word; border-bottom:1px solid #eee; }
+.ui.table tr td { border-top: none; }
+#my-own-repos.loading,
+#my-sub-repos.loading,
+#repos-shared-to-me.loading {
+    min-height: 100px;
+}
 /* lib view */
 .repo-file-list .dirent-name {
     width:220px;
@@ -25,6 +136,76 @@
     color:#fff;
     text-decoration:none;
     background:#feaa7c;
+}
+/* dir view */
+#dir-view .repo-op,
+.wiki-top {
+    padding:9px 10px;
+    background:#f2f2f2;
+    margin-bottom:.5em;
+    border-radius:2px;
+}
+#dir-view .repo-op {
+    padding: 9px 10px;
+}
+#dir-view .repo-op .op-btn {
+    padding:5px 14px;
+}
+/* file upload */
+#upload-menu {
+    position:absolute;
+    left:0;
+    top:29px;
+    border:1px solid #c5c5c5;
+    border-radius:2px;
+    box-shadow: 0 0 2px #c5c5c5;
+    background:#fff;
+}
+#upload-menu .item {
+    position:relative;
+    text-align:left;
+    padding:0 10px;
+    height:27px;
+    line-height:27px;
+    overflow:hidden; /* for 'hover', as long 'input' in it. */
+}
+#upload-file input,
+#upload-menu input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    height:27px;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    cursor: pointer;
+}
+/* multi repo operation */
+.repo-setting-icon,
+.repo-trash-icon,
+.repo-history-icon {
+    width:30px;
+    height:30px;
+    background-image: url('../img/multi-repo-op.png');
+    background-repeat: no-repeat;
+    display:inline-block;
+    margin-right:10px;
+    outline:none; /* removing the dotted outline for FireFox */
+}
+.repo-setting-icon:hover {
+    background-position: 0 -30px;
+}
+.repo-trash-icon {
+    background-position: 0 -60px;
+}
+.repo-trash-icon:hover {
+    background-position: 0 -90px;
+}
+.repo-history-icon {
+    background-position: 0 -120px;
+}
+.repo-history-icon:hover {
+    background-position: 0 -150px;
 }
 /* custom select2 */
 .select2-container-multi .select2-choices {

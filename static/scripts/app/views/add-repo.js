@@ -1,10 +1,9 @@
 define([
     'jquery',
-    'simplemodal',
     'underscore',
     'backbone',
     'common'
-], function($, simplemodal, _, Backbone, Common) {
+], function($, _, Backbone, Common) {
     'use strict';
 
     var AddRepoView = Backbone.View.extend({

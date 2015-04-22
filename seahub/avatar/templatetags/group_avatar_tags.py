@@ -76,6 +76,6 @@ def grp_avatar(group_id, size=GROUP_AVATAR_DEFAULT_SIZE):
     else:
         url = get_default_group_avatar_url()
 
-    img = """<img src="%s" alt="" width="%s" height="%s" class="avatar" />""" % (url, size, size)
+    img = """<img src="%s" alt="" width="%s" height="%s" class="ui avatar image" />""" % (url, size, size)
     cache.set(key, img, AVATAR_CACHE_TIMEOUT)
     return img

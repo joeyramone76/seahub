@@ -57,7 +57,7 @@ define([
             this.$tabs.show();
             this.$table.hide();
             this.$loadingTip.show();
-            $('#sublib-tab', this.$tabs).parent().addClass('ui-state-active');
+            $('#sublib-tab').addClass('active');
         },
 
         show: function() {
@@ -70,7 +70,7 @@ define([
             this.$el.hide();
             this.$table.hide();
             this.$emptyTip.hide();
-            $('#sublib-tab', this.$tabs).parent().removeClass('ui-state-active');
+            $('#sublib-tab').removeClass('active');
         },
 
         createRepo: function() {

@@ -1,0 +1,8 @@
+/*******************************
+    User Variable Overrides
+*******************************/
+
+
+@verticalPadding: 0.55em;
+@horizontalPadding: 1em;
+@solidBorderColor: #c5c5c5;

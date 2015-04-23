@@ -260,6 +260,8 @@ define([
                     is_repo_owner: dir.is_repo_owner,
                     enable_upload_folder: app.pageOptions.enable_upload_folder
                 })));
+
+                $('.repo-setting-icon, .repo-history-icon, .repo-trash-icon').popup();
             },
 
             // Directory Operations

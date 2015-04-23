@@ -24,6 +24,7 @@
     "loader",
     "segment",
     "grid",
+    "popup",
     "sticky",
     "transition",
     "visibility"

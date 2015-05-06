@@ -9,7 +9,7 @@ RequestContext.
 
 import re
 from seahub.settings import SEAFILE_VERSION, SITE_TITLE, SITE_NAME, \
-    ENABLE_SIGNUP, MAX_FILE_NAME, BRANDING_CSS, LOGO_PATH, LOGO_WIDTH, LOGO_HEIGHT,\
+    MAX_FILE_NAME, BRANDING_CSS, LOGO_PATH, \
     SHOW_REPO_DOWNLOAD_BUTTON, REPO_PASSWORD_MIN_LENGTH
 
 try:
@@ -18,6 +18,7 @@ except ImportError:
     SEACLOUD_MODE = False
 
 from seahub.utils import HAS_FILE_SEARCH, EVENTS_ENABLED, TRAFFIC_STATS_ENABLED
+from seahub.utils.stringutils import to_boolean
 
 try:
     from seahub.settings import ENABLE_PUBFILE
@@ -32,6 +33,8 @@ try:
     from seahub.settings import MULTI_TENANCY
 except ImportError:
     MULTI_TENANCY = False
+
+from seahub.dysettings.conf import settings as dy_settings
 
 def base(request):
     """
@@ -63,14 +66,14 @@ def base(request):
         'site_title': SITE_TITLE,
         'branding_css': BRANDING_CSS,
         'logo_path': LOGO_PATH,
-        'logo_width': LOGO_WIDTH,
-        'logo_height': LOGO_HEIGHT,
+        'logo_width': dy_settings.LOGO_WIDTH,
+        'logo_height': dy_settings.LOGO_HEIGHT,
         'seacloud_mode': SEACLOUD_MODE,
         'cloud_mode': request.cloud_mode,
         'org': org,
         'base_template': base_template,
         'site_name': SITE_NAME,
-        'enable_signup': ENABLE_SIGNUP,
+        'enable_signup': to_boolean(dy_settings.ENABLE_SIGNUP),
         'max_file_name': MAX_FILE_NAME,
         'has_file_search': HAS_FILE_SEARCH,
         'enable_pubfile': ENABLE_PUBFILE,

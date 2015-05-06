@@ -35,6 +35,9 @@
             <a href="{{ SITE_ROOT }}sys/loginadmin/" class="activity">{% trans "Logs" %}</a>
         </li>
         {% endif %}
+        <li class="tab {% block cur_setting %}{% endblock %}">
+            <a href="{% url "sys_settings" %}" class="settings">{% trans "Settings" %}</a>
+        </li>
     </ul>
 </div>
 {% endblock %}

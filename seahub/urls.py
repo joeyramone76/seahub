@@ -203,6 +203,7 @@ urlpatterns = patterns('',
     (r'^thumbnail/', include('seahub.thumbnail.urls')),
 
     ### system admin ###
+    url(r'^sys/settings/$', sys_settings, name='sys_settings'),
     url(r'^sys/seafadmin/$', sys_repo_admin, name='sys_repo_admin'),
     url(r'^sys/seafadmin/system/$', sys_list_system, name='sys_list_system'),
     url(r'^sys/seafadmin/repo-trash/$', sys_repo_trash, name='sys_repo_trash'),

@@ -1,0 +1,25 @@
+{% extends "sysadmin/base.html" %}
+{% load i18n %}
+{% block cur_setting %}tab-cur{% endblock %}
+
+
+{% block right_panel %}
+<form action="" method="post" class="form">{% csrf_token %}
+    <label>Logo width</label><input type="text" name="logo_width" value="{{ logo_width }}" class="input" /><br />
+    <label>Logo height</label><input type="text" name="logo_height" value="{{ logo_height }}" class="input" /><br />
+
+    <label>Signup</label><input type="radio" name="signup" value="1" class="vam" {% if enable_signup %}checked{% endif %}>Enable
+    <input type="radio" name="signup" value="0" class="vam" {% if not enable_signup %}checked{% endif %}>Disable
+    <br />
+
+    <p class="error hide"></p>
+    <input type="submit" value="{% trans "Submit" %}" class="submit" />
+</form>
+{% endblock %}
+
+{% block extra_script %}
+<script type="text/javascript">
+
+</script>
+{% endblock %}
+ 

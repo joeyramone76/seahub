@@ -205,6 +205,7 @@ INSTALLED_APPS = (
     'seahub.share',
     'seahub.help',
     'seahub.thumbnail',
+    'seahub.dysettings',
 )
 
 

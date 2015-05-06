@@ -26,9 +26,11 @@ from seahub.base.sudo_mode import update_sudo_mode_ts
 from seahub.auth import authenticate
 from seahub.auth.decorators import login_required, login_required_ajax
 from seahub.constants import GUEST_USER, DEFAULT_USER
+from seahub.dysettings.conf import settings as dy_settings
 from seahub.utils import IS_EMAIL_CONFIGURED, string2list, is_valid_username, \
     is_pro_version
 from seahub.utils.rpc import mute_seafile_api
+from seahub.utils.stringutils import to_boolean
 from seahub.views import get_system_default_repo_id
 from seahub.forms import SetUserQuotaForm, AddUserForm, BatchAddUserForm
 from seahub.profile.models import Profile, DetailedProfile
@@ -1448,3 +1450,32 @@ def sys_sudo_mode(request):
             'enable_shib_login': enable_shib_login,
         },
         context_instance=RequestContext(request))
+
+@login_required
+@sys_staff_required
+def sys_settings(request):
+    """
+    
+    Arguments:
+    - `request`:
+    """
+    if request.method == 'POST':
+        logo_width = request.POST.get('logo_width', None)
+        if logo_width:
+            dy_settings.LOGO_WIDTH = logo_width
+
+        logo_height = request.POST.get('logo_height', None)
+        if logo_height:
+            dy_settings.LOGO_HEIGHT = logo_height
+
+        signup = request.POST.get('signup', None)
+        if signup:
+            dy_settings.ENABLE_SIGNUP = signup
+
+        return HttpResponseRedirect(reverse('sys_settings'))
+
+    return render_to_response('sysadmin/settings.html', {
+        'logo_width': dy_settings.LOGO_WIDTH,
+        'logo_height': dy_settings.LOGO_HEIGHT,
+        'enable_signup': to_boolean(dy_settings.ENABLE_SIGNUP),
+    }, context_instance=RequestContext(request))

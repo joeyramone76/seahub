@@ -23,8 +23,10 @@ from seahub.auth.forms import AuthenticationForm, CaptchaAuthenticationForm
 from seahub.auth.forms import PasswordResetForm, SetPasswordForm, PasswordChangeForm
 from seahub.auth.tokens import default_token_generator
 from seahub.base.accounts import User
+from seahub.dysettings.conf import settings as dy_settings
 from seahub.utils import is_ldap_user
 from seahub.utils.ip import get_remote_ip
+from seahub.utils.stringutils import to_boolean
 from seahub.settings import USER_PASSWORD_MIN_LENGTH, \
     USER_STRONG_PASSWORD_REQUIRED, USER_PASSWORD_STRENGTH_LEVEL
 
@@ -177,7 +179,7 @@ def login(request, template_name='registration/login.html',
     else:
         current_site = RequestSite(request)
 
-    enable_signup = getattr(settings, 'ENABLE_SIGNUP', False)
+    enable_signup = to_boolean(getattr(dy_settings, 'ENABLE_SIGNUP', False))
     multi_tenancy = getattr(settings, 'MULTI_TENANCY', False)
     if enable_signup:
         if multi_tenancy:

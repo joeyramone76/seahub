@@ -8,6 +8,7 @@ from registration.views import register
 
 from seahub.base.accounts import RegistrationForm, DetailedRegistrationForm
 from seahub.base.generic import DirectTemplateView
+from seahub.utils.stringutils import to_boolean
 
 form_class = DetailedRegistrationForm if settings.REQUIRE_DETAIL_ON_REGISTRATION \
     else RegistrationForm
@@ -37,9 +38,9 @@ try:
     from seahub.settings import CLOUD_MODE
 except ImportError:
     CLOUD_MODE = False
-from seahub.settings import ENABLE_SIGNUP
+from seahub.dysettings.conf import settings as dy_settings
 
-if ENABLE_SIGNUP:
+if to_boolean(dy_settings.ENABLE_SIGNUP):
     urlpatterns += patterns('',
         url(r'^register/$',
             register,

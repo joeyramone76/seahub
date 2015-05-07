@@ -158,7 +158,7 @@
     <form id="mv-form" action="" method="post" class="file-choose-form hide">{% csrf_token %}
         <div id="mv-dir-list" class="dir-tree-cont">
             <h5 class="hd cspt"><span class="icon-caret-down"></span>{% trans "Current Library"%}</h5>
-            <img src="{{MEDIA_URL}}img/loading-icon.gif" alt="" class="loading-tip" />     
+            <img class="loading-tip" width="32" src="{{MEDIA_URL}}img/loading-new.gif" alt="{% trans 'Loading...' %}" />     
             <div id="current-repo-dirs"></div>
             {% if not repo.encrypted %}
             <h5 class="hd cspt"><span class="icon-caret-right"></span>{% trans "Other Libraries"%}</h5>

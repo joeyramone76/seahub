@@ -110,7 +110,9 @@ define([
               case 'get_folder_perm_by_path': return siteRoot + 'ajax/repo/' + options.repo_id + '/get-folder-perm-by-path/';
               case 'set_user_folder_perm': return siteRoot + 'ajax/repo/' + options.repo_id + '/set-user-folder-perm/';
               case 'set_group_folder_perm': return siteRoot + 'ajax/repo/' + options.repo_id + '/set-group-folder-perm/';
+              case 'get_history_changes': return siteRoot + 'ajax/repo/' + options.repo_id + '/history/changes/';
               case 'starred_files': return siteRoot + 'api2/starredfiles/';
+              case 'events': return siteRoot + 'api2/events/';
             }
         },
 

@@ -104,11 +104,18 @@ def thumbnail_create(request, repo_id):
     thumbnail_file = os.path.join(thumbnail_dir, obj_id)
     if not os.path.exists(thumbnail_file):
         try:
+            import time
+            start_time = time.time()
             f = StringIO(open_file.read())
+            logger.error('StringIO:')
+            logger.error(time.time() - start_time)
             image = Image.open(f)
             if image.mode not in ["1", "L", "P", "RGB", "RGBA"]:
                 image = image.convert("RGB")
+            start_time = time.time()
             image.thumbnail((int(size), int(size)), Image.ANTIALIAS)
+            logger.error('thumbnail:')
+            logger.error(time.time() - start_time)
             image.save(thumbnail_file, THUMBNAIL_EXTENSION)
         except Exception as e:
             logger.error(e)

@@ -40,7 +40,7 @@ from .utils import is_repo_writable, is_repo_accessible, \
     get_person_msgs, api_group_check, get_email, get_timestamp, \
     get_group_message_json, get_group_msgs, get_group_msgs_json, get_diff_details, \
     json_response, to_python_boolean
-from seahub.avatar.templatetags.avatar_tags import api_avatar_url
+from seahub.avatar.templatetags.avatar_tags import api_avatar_url, avatar
 from seahub.avatar.templatetags.group_avatar_tags import api_grp_avatar_url, \
         grp_avatar
 from seahub.base.accounts import User
@@ -55,6 +55,7 @@ from seahub.group.utils import BadGroupNameError, ConflictGroupNameError
 from seahub.message.models import UserMessage
 from seahub.notifications.models import UserNotification
 from seahub.options.models import UserOptions
+from seahub.contacts.models import Contact
 from seahub.profile.models import Profile
 from seahub.views.modules import get_wiki_enabled_group_list
 from seahub.shortcuts import get_first_object_or_none
@@ -420,6 +421,76 @@ class RegDevice(APIView):
         if modified:
             token.save()
         return Response("success")
+
+class SearchUser(APIView):
+    """ Search user from contacts/all users
+    """
+    authentication_classes = (TokenAuthentication, SessionAuthentication)
+    permission_classes = (IsAuthenticated,)
+    throttle_classes = (UserRateThrottle, )
+
+    def get(self, request, format=None):
+
+        username = request.user.username
+        email_or_nickname = request.GET.get('email_or_nickname', '')
+        contacts = Contact.objects.get_contacts_by_user(username)
+        search_result = []
+
+        if not email_or_nickname:
+            for c in contacts:
+                search_result.append(c.contact_email)
+        else:
+            users = []
+            profile_all = []
+            if request.cloud_mode:
+                if is_org_context(request):
+                    url_prefix = request.user.org.url_prefix
+                    users = seaserv.get_org_users_by_url_prefix(url_prefix, -1, -1)
+                else:
+                    for c in contacts:
+                        users.append({'email': c.contact_email})
+
+                # in cloud_mode, only get profiles of users in org or
+                # users in contacts
+                profile_all = Profile.objects.filter(user__in=[u.email for u in users]).values('user', 'nickname')
+            else:
+                users = seaserv.ccnet_threaded_rpc.search_emailusers(email_or_nickname,
+                                                                     -1, -1)
+                profile_all = Profile.objects.all().values('user', 'nickname')
+
+            # search by nickname
+            for p in profile_all:
+                if email_or_nickname in p['nickname']:
+                    search_result.append(p['user'])
+
+            # search by email
+            for u in users:
+                if email_or_nickname in u.email:
+                    search_result.append(u.email)
+
+            # remove duplicate emails
+            search_result = {}.fromkeys(search_result).keys()
+            if username in search_result:
+                search_result.remove(username)
+
+        formated_result = format_user_result(search_result)
+        return HttpResponse(json.dumps({"users": formated_result}), status=200,
+                            content_type=json_content_type)
+
+def format_user_result(users):
+    results = []
+    for email in users:
+        try:
+            user = User.objects.get(email = email)
+            if user.is_active:
+                results.append({
+                    "email": email,
+                    "avatar": avatar(email, 32),
+                    "name": email2nickname(email),
+                })
+        except User.DoesNotExist:
+            continue
+    return results
 
 class Search(APIView):
     """ Search all the repos

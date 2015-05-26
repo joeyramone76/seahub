@@ -521,7 +521,7 @@ define([
                     cache: true,
                     data: function (params) {
                         return {
-                            email_or_nickname: params
+                            q: params
                         };
                     },
                     results: function (data) {

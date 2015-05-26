@@ -23,7 +23,7 @@ from rest_framework.views import APIView
 
 from django.contrib.sites.models import RequestSite
 from django.db import IntegrityError
-from django.db.models import F
+from django.db.models import F, Q
 from django.http import HttpResponse, Http404
 from django.template import RequestContext
 from django.template.loader import render_to_string
@@ -432,11 +432,11 @@ class SearchUser(APIView):
     def get(self, request, format=None):
 
         username = request.user.username
-        email_or_nickname = request.GET.get('email_or_nickname', '')
-        contacts = Contact.objects.get_contacts_by_user(username)
+        q = request.GET.get('q', '')
         search_result = []
 
-        if not email_or_nickname:
+        if not q:
+            contacts = Contact.objects.get_contacts_by_user(username)
             for c in contacts:
                 search_result.append(c.contact_email)
         else:
@@ -447,26 +447,23 @@ class SearchUser(APIView):
                     url_prefix = request.user.org.url_prefix
                     users = seaserv.get_org_users_by_url_prefix(url_prefix, -1, -1)
                 else:
+                    contacts = Contact.objects.get_contacts_by_user(username)
                     for c in contacts:
                         users.append({'email': c.contact_email})
 
-                # in cloud_mode, only get profiles of users in org or
-                # users in contacts
-                profile_all = Profile.objects.filter(user__in=[u.email for u in users]).values('user', 'nickname')
+                # 'user__in' for only get profile of user in org or contacts in cloud_mode
+                # 'nickname__contains' for search by nickname
+                profile_all = Profile.objects.filter(Q(user__in=[u.email for u in users]) & \
+                                                     Q(nickname__contains=q)).values('user')
             else:
-                users = seaserv.ccnet_threaded_rpc.search_emailusers(email_or_nickname,
-                                                                     -1, -1)
-                profile_all = Profile.objects.all().values('user', 'nickname')
+                users = seaserv.ccnet_threaded_rpc.search_emailusers(q, -1, -1)
+                profile_all = Profile.objects.filter(nickname__contains=q).values('user')
 
-            # search by nickname
             for p in profile_all:
-                if email_or_nickname in p['nickname']:
-                    search_result.append(p['user'])
+                search_result.append(p['user'])
 
-            # search by email
             for u in users:
-                if email_or_nickname in u.email:
-                    search_result.append(u.email)
+                search_result.append(u.email)
 
             # remove duplicate emails
             search_result = {}.fromkeys(search_result).keys()
